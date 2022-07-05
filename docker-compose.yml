@@ -5,7 +5,7 @@ services:
   environment:
    - MYSQL_ROOT_PASSWORD=password
   ports:
-   - '3306:3306'
+   - '3306:3000'
  web:
   build: .
   mem_limit: 512m
@@ -40,13 +40,13 @@ services:
    - convox.environment.secure=true
    - convox.deployment.minimum=0
    - convox.deployment.maximum=200
+   # scheduled task definitions
+   # Uncomment when deploying own installation of Sharetribe
+   - convox.cron.test-task=0 9 * * ? bundle exec rails runner CommunityMailer.deliver_community_updates
   depends_on:
    - db
   links:
    - db
-   # scheduled task definitions
-   # Uncomment when deploying own installation of Sharetribe
-   #- convox.cron.test-task=0 9 * * ? bundle exec rails runner CommunityMailer.deliver_community_updates
   command: ['script/startup.sh', 'worker']
  shredder:
   build: .
@@ -55,4 +55,8 @@ services:
    - convox.environment.secure=true
    - convox.deployment.minimum=0
    - convox.deployment.maximum=100
+  depends_on:
+   - db
+  links:
+   - db
   command: ['script/startup.sh', 'shredder']
