@@ -4,7 +4,7 @@ development:
  encoding: utf8
  username: root
  password: password
- host: db
+ host: 127.0.0.1
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -16,7 +16,7 @@ test: &test
  encoding: utf8
  username: root
  password: password
- host: db
+ host: 127.0.0.1
 
 staging:
  adapter: mysql2
@@ -24,15 +24,15 @@ staging:
  encoding: utf8
  username: root
  password: password
- host: db
+ host: 127.0.0.1
 
 production:
  adapter: mysql2
  database: sharetribe_production
  encoding: utf8
- username: root
- password: password
- host: db
+ username: sharetribe
+ password: secret
+ host: mysql
 
 cucumber:
  <<: *test
